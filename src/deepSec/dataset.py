@@ -50,9 +50,9 @@ class CustomDataset(Dataset):
                 self.y.append(cls)
 
                 if idx_by_species:
-                    if fields[0].find('metazoa_') != -1:
+                    if fields[0].find('metazoa_') != -1 or fields[0].find('protists_') != -1:
                         self.train_idx.append(n)
-                    else:
+                    elif fields[0].find('vertebrate_') != -1:
                         self.val_idx.append(n)
             inFile.close()
 
