@@ -6,7 +6,7 @@
 
 ## Overview
 
-deepSec is a deep learning-based tool designed to predict selenocysteine (Sec) incorporation sites in protein sequences. Selenocysteine, known as the 21st amino acid, is incorporated into proteins via a unique mechanism that involves the recoding of the UGA stop codon. Selenocysteine is an evolutionarily conserved amino acid found in all three domains of life. It has a lower reduction potential than cysteine, which makes it particularly effective in enzymes involved in antioxidant activity. Dietary selenium is incorporated into selenoproteins that support essential functions throughout the body. Accurate prediction of Sec sites - either through the discovery of novel Sec-containing proteins or the annotation of Sec-inducing mutations - is essential for understanding Sec-related protein function and diseases.
+deepSec is a deep learning-based tool designed to predict selenocysteine (Sec) incorporation sites. Selenocysteine, known as the 21st amino acid, is incorporated into proteins via a unique mechanism that involves the recoding of the UGA stop codon. Selenocysteine is an evolutionarily conserved amino acid found in all three domains of life. It has a lower reduction potential than cysteine, which makes it particularly effective in enzymes involved in antioxidant activity. Dietary selenium is incorporated into selenoproteins that support essential functions throughout the body. Accurate prediction of Sec sites - either through the discovery of novel Sec-containing proteins or the annotation of Sec-inducing mutations - is essential for understanding Sec-related protein function and diseases.
 
 ## Installation
 
