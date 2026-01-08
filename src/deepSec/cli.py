@@ -76,7 +76,7 @@ def main():
     elif args.command == 'preprocess':
         dp.pep2cds2cdna(in_dir=args.input_dir, out_file=args.output_file)
         dp.get_pos_of_U(in_file=args.output_file)
-        dp.get_feature_seq(in_file=args.output_file, flank=args.flank_length)
+        dp.get_feature_seq(in_file=args.output_file, flank=args.flank)
         dp.down_sampling_negtive_samples(in_file=args.output_file, n_fold=args.down_sampling_fold)
     elif args.command == 'torch-dataset':
         ds = CustomDataset(args.input_file)
