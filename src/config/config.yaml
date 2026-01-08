@@ -1,0 +1,46 @@
+models:
+  SpliceAI:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 16
+      n_classes: 2
+      NWD: '[[16, 11, 1]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+  GPT:
+    class: GPT
+    params:
+      batch_size: 32
+      vocab_size: 5
+      emb_dim: 32
+      context_length: 100
+      drop_rate: 0.1
+      n_layers: 4
+      n_heads: 4
+      n_classes: 2
+      positional_encoding: True
+      learning_rate: 1e-3
+      weight_decay: 0.01
+  ResNet:
+    class: ResNet
+    params:
+      in_channels: 4
+      layer_channels: [8, 16, 32, 64]
+      num_blocks: [2, 2, 2, 2]
+      num_classes: 2
+      learning_rate: 1e-3
+      weight_decay: 0.01
+  CNN:
+    class: CNN
+    params:
+      in_channels: 4
+      out_channels: 32
+      kernel_size: 12
+      kernel_size_maxpool: 4
+      out_features: 16
+      n_classes: 2
+      learning_rate: 1e-3
+      weight_decay: 0.01
