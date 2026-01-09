@@ -52,7 +52,6 @@ class DataProcessor():
                             if line1.find('gene_symbol:') != -1:
                                 gene_name = line1.split('gene_symbol:')[-1].split()[0]
                             D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
-                            D[transcript_id][0] = sp
                             D[transcript_id][4] = protein_id
                             D[transcript_id][7] = line2
                         elif in_file.find('.cds.') != -1:
