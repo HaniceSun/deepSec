@@ -22,53 +22,55 @@ class DataProcessor():
                 S[k].append(f)
 
         for k in sorted(S):
-            D = {}
-            for in_file in sorted(S[k]):
-                inFile = gzip.open(in_file, 'rt')
-                while True:
-                    line1 = inFile.readline().strip()
-                    line2 = inFile.readline().strip()
-                    if line1:
-                        if in_file.find('.cdna.') != -1:
-                            transcript_id = line1.split()[0][1:]
-                            gene_id = line1.split('gene:')[-1].split()[0]
-                            gene_name = '.'
-                            if line1.find('gene_symbol:') != -1:
-                                gene_name = line1.split('gene_symbol:')[-1].split()[0]
-                            sp = in_file.split('.cdna.')[0].split('/')[-1]
-                            ## species, gene_id, gene_name, transcript_id, protein_id, cdna, cds, pep, source
-                            D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
-                            D[transcript_id][0] = sp
-                            D[transcript_id][1] = gene_id
-                            D[transcript_id][2] = gene_name
-                            D[transcript_id][3] = transcript_id
-                            D[transcript_id][5] = line2
-                            D[transcript_id][8] = in_file.split('data/')[-1].split('/')[0]
-                        elif in_file.find('.pep.') != -1:
-                            protein_id = line1.split()[0][1:]
-                            gene_id = line1.split('gene:')[-1].split()[0]
-                            transcript_id = line1.split('transcript:')[-1].split()[0]
-                            gene_name = '.'
-                            if line1.find('gene_symbol:') != -1:
-                                gene_name = line1.split('gene_symbol:')[-1].split()[0]
-                            D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
-                            D[transcript_id][4] = protein_id
-                            D[transcript_id][7] = line2
-                        elif in_file.find('.cds.') != -1:
-                            transcript_id = line1.split()[0][1:]
-                            gene_id = line1.split('gene:')[-1].split()[0]
-                            gene_name = '.'
-                            if line1.find('gene_symbol:') != -1:
-                                gene_name = line1.split('gene_symbol:')[-1].split()[0]
-                            D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
-                            D[transcript_id][6] = line2
-                    else:
-                        break
-                inFile.close()
-    
-            for k in D:
-                if D[k][-3] != '.' and D[k][-2] != '.' and D[k][-1] != '.':
-                    ouFile.write(('\t'.join(D[k]) + '\n'))
+            if len(S[k]) == 3:
+                print(f'Processing {k}', flush=True)
+                D = {}
+                for in_file in sorted(S[k]):
+                    inFile = gzip.open(in_file, 'rt')
+                    while True:
+                        line1 = inFile.readline().strip()
+                        line2 = inFile.readline().strip()
+                        if line1:
+                            if in_file.find('.cdna.') != -1:
+                                transcript_id = line1.split()[0][1:]
+                                gene_id = line1.split('gene:')[-1].split()[0]
+                                gene_name = '.'
+                                if line1.find('gene_symbol:') != -1:
+                                    gene_name = line1.split('gene_symbol:')[-1].split()[0]
+                                sp = in_file.split('.cdna.')[0].split('/')[-1]
+                                ## species, gene_id, gene_name, transcript_id, protein_id, cdna, cds, pep, source
+                                D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
+                                D[transcript_id][0] = sp
+                                D[transcript_id][1] = gene_id
+                                D[transcript_id][2] = gene_name
+                                D[transcript_id][3] = transcript_id
+                                D[transcript_id][5] = line2
+                                D[transcript_id][8] = in_file.split('data/')[-1].split('/')[0]
+                            elif in_file.find('.pep.') != -1:
+                                protein_id = line1.split()[0][1:]
+                                gene_id = line1.split('gene:')[-1].split()[0]
+                                transcript_id = line1.split('transcript:')[-1].split()[0]
+                                gene_name = '.'
+                                if line1.find('gene_symbol:') != -1:
+                                    gene_name = line1.split('gene_symbol:')[-1].split()[0]
+                                D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
+                                D[transcript_id][4] = protein_id
+                                D[transcript_id][7] = line2
+                            elif in_file.find('.cds.') != -1:
+                                transcript_id = line1.split()[0][1:]
+                                gene_id = line1.split('gene:')[-1].split()[0]
+                                gene_name = '.'
+                                if line1.find('gene_symbol:') != -1:
+                                    gene_name = line1.split('gene_symbol:')[-1].split()[0]
+                                D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
+                                D[transcript_id][6] = line2
+                        else:
+                            break
+                    inFile.close()
+        
+                for k in D:
+                    if D[k][-3] != '.' and D[k][-2] != '.' and D[k][-1] != '.':
+                        ouFile.write(('\t'.join(D[k]) + '\n'))
         ouFile.close()
 
     def get_pos_of_U(self, in_file='Ensembl_Protein2Transcript.txt.gz'):
