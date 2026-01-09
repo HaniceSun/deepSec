@@ -1,5 +1,5 @@
 <p align="left">
-<img src="assets/logo.png" alt="deepSec logo" width="150"/>
+<img src="assets/logo.png" alt="deepSec logo" width="250"/>
 </p>
 
 # Deep Learning Prediction of Selenocysteine Sites (deepSec)
