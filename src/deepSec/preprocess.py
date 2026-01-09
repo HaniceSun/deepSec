@@ -38,7 +38,7 @@ class DataProcessor():
                                 gene_name = '.'
                                 if line1.find('gene_symbol:') != -1:
                                     gene_name = line1.split('gene_symbol:')[-1].split()[0]
-                                sp = in_file.split('.cdna.')[0].split('/')[-1]
+                                sp = in_file.split('/')[-1].split('.cdna.')[0]
                                 ## species, gene_id, gene_name, transcript_id, protein_id, cdna, cds, pep, source
                                 D.setdefault(transcript_id, ['.', '.', '.', '.', '.', '.', '.', '.', '.'])
                                 D[transcript_id][0] = sp
