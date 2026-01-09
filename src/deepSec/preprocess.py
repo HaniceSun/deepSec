@@ -18,13 +18,13 @@ class DataProcessor():
         for f in in_files:
             if f.find('abinitio') == -1:
                 if f.find('.cdna.') != -1 or f.find('.cds.') != -1 or f.find('.pep.') != -1:
-                    k = f.replace('.cdna.', '.').replace('.cds.', '.').replace('.pep.', '.')
+                    k = f.split('/')[-1].replace('.cdna.', '.').replace('.cds.', '.').replace('.pep.', '.')
                     S.setdefault(k, [])
                     S[k].append(f)
 
         for k in sorted(S):
+            print(f'Processing {k} {len(S[k])}', flush=True)
             if len(S[k]) == 3:
-                print(f'Processing {k}', flush=True)
                 D = {}
                 for in_file in sorted(S[k]):
                     inFile = gzip.open(in_file, 'rt')
