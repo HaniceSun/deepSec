@@ -23,7 +23,7 @@ class DataProcessor():
 
         for k in sorted(S):
             D = {}
-            for in_file in S[k]:
+            for in_file in sorted(S[k]):
                 inFile = gzip.open(in_file, 'rt')
                 while True:
                     line1 = inFile.readline().strip()
