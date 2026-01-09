@@ -17,7 +17,7 @@ class DataProcessor():
         S = {}
         for f in in_files:
             if f.find('abinitio') == -1:
-                if k.find('.cdna.') != -1 or f.find('.cds.') != -1 or f.find('.pep.') != -1:
+                if f.find('.cdna.') != -1 or f.find('.cds.') != -1 or f.find('.pep.') != -1:
                     k = f.replace('.cdna.', '.').replace('.cds.', '.').replace('.pep.', '.')
                     S.setdefault(k, [])
                     S[k].append(f)
