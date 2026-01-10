@@ -74,9 +74,13 @@ def main():
                                   out_dir=args.output_dir)
 
     elif args.command == 'preprocess':
+        print('mapping pep, cds, and cdna ...', flush=True)
         dp.pep2cds2cdna(in_dir=args.input_dir, out_file=args.output_file)
+        print('getting U positions...', flush=True)
         dp.get_pos_of_U(in_file=args.output_file)
+        print('getting feature sequences...', flush=True)
         dp.get_feature_seq(in_file=args.output_file, flank=args.flank)
+        print('down sampling negative samples...', flush=True)
         dp.down_sampling_negtive_samples(in_file=args.output_file, n_fold=args.down_sampling_fold)
     elif args.command == 'torch-dataset':
         ds = CustomDataset(args.input_file)
