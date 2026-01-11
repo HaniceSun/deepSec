@@ -98,7 +98,7 @@ class Trainer:
                     print(f'{ds} epoch:{epoch} batch:{nb} loss:{loss.detach().item()}', flush=True)
         loss_avg = loss_total / len(dataset)
         loss_list.append(loss_avg)
-        print(f'{ds} avg loss: {" ".join([str(x) for x in self.loss_list])}')
+        print(f'{ds} avg loss: {" ".join([str(x) for x in loss_list])}')
 
         if test:
             self.log_metrics()
