@@ -10,7 +10,7 @@ from importlib import resources
 class Config:
     def __init__(self, config):
         for k, v in config.items():
-            if k in ['NWD', 'LR', 'learning_rate']:
+            if k in ['NWD', 'learning_rate']:
                 setattr(self, k, eval(v))
             else:
                 setattr(self, k, v)
