@@ -100,13 +100,11 @@ class Trainer:
         loss_list.append(loss_avg)
         print(f'{ds} avg loss: {" ".join([str(x) for x in loss_list])}')
 
-        if test:
-            self.log_metrics()
-
     def test(self, epoch, test=True):
         self.load_checkpoint(epoch)
         self.validate(epoch, test=test)
         self.get_confusion(dataset='test')
+        self.log_metrics(test=test)
 
     def get_confusion(self, dataset='val', labels=[0, 1]):
         self.model.eval()
@@ -183,7 +181,7 @@ class Trainer:
                         else:
                             df.to_csv(out_file, index=False, header=False, sep='\t', mode='a')
 
-    def log_metrics(self):
+    def log_metrics(self, test=False):
         df = pd.DataFrame()
         df['epoch'] = self.epochs
         df['train_loss'] = self.train_loss
@@ -208,12 +206,13 @@ class Trainer:
         else:
             df.to_csv(self.metrics_file, index=False, header=True, sep='\t')
 
-        plot_file = self.metrics_file.replace('.txt', '.pdf')
-        fig = plt.figure()
-        ax = fig.add_subplot()
-        ax.plot(df['epoch'], df['train_loss'], label='train_loss')
-        ax.plot(df['epoch'], df['val_loss'], label='val_loss')
-        plt.savefig(plot_file)
+        if not test:
+            plot_file = self.metrics_file.replace('.txt', '.pdf')
+            fig = plt.figure()
+            ax = fig.add_subplot()
+            ax.plot(df['epoch'], df['train_loss'], label='train_loss')
+            ax.plot(df['epoch'], df['val_loss'], label='val_loss')
+            plt.savefig(plot_file)
 
     def saliency_map(self, epoch=None, sal_seq=[], out_file='saliency.txt', target=1, alphabet=['N', 'A', 'C', 'G', 'T']):
         self.load_checkpoint(epoch)
