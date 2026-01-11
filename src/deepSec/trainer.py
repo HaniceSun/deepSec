@@ -40,7 +40,9 @@ class Trainer:
         if lambda_lr:
             self.lr_scheduler = LambdaLR(self.optimizer, lr_lambda=lambda epoch: lambda_lr[epoch])
 
-        self.early_stop = EarlyStop()
+        self.early_stopping = None
+        if cfg.early_stopping:
+            self.early_stopping = EarlyStopping()
         self.best_epochs = []
 
     def train(self, epoch):
@@ -301,16 +303,17 @@ class Trainer:
             self.get_confusion(dataset='train')
             if validate:
                 self.validate(epoch)
-                self.early_stop(self.val_loss[-1], epoch)
-                self.best_epochs.append(self.early_stop.best_epoch)
                 self.get_confusion(dataset='val')
+                if self.early_stopping:
+                    self.early_stopping(self.val_loss[-1], epoch)
+                    self.best_epochs.append(self.early_stopping.best_epoch)
 
-                if self.early_stop.stopped:
-                    print(f'Early stopped, beast epoch: {self.early_stop.best_epoch}')
+                if self.early_stopping.stopped:
+                    print(f'Early stopped, beast epoch: {self.early_stopping.best_epoch}')
                     break
 
             if self.lr_scheduler:
-                self.lheduler.step()
+                self.lr_seduler.step()
 
         self.log_metrics()
 

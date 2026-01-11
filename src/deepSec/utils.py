@@ -15,7 +15,7 @@ class Config:
             else:
                 setattr(self, k, v)
 
-class EarlyStop:
+class EarlyStopping:
     def __init__(self, patience=3, delta=0):
         self.patience = patience
         self.delta = delta
