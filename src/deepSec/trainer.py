@@ -4,7 +4,7 @@ from .utils import *
 
 class Trainer:
     def __init__(self, config_file='config.yaml', model_name='SpliceAI', train_file=None, val_file=None, test_file=None,
-                 metrics_file='metrics.txt', lr_lambda=None, print_every_n_batches=100):
+                 metrics_file=None, lr_lambda=None, print_every_n_batches=100):
         self.config_dir = f'{resources.files("deepSec").parent}/config'
         self.config = self.load_yaml(config_file)
 
@@ -25,7 +25,10 @@ class Trainer:
             self.val_dataset = torch.load(val_file, weights_only=False)
         if test_file and os.path.exists(test_file):
             self.test_dataset = torch.load(test_file, weights_only=False)
+
         self.metrics_file = metrics_file
+        if not self.metrics_file:
+            self.metrics_file = f'{model_name}_metrics.txt'
 
         self.epochs = []
         self.train_loss = []
@@ -95,10 +98,13 @@ class Trainer:
                     print(f'{ds} epoch:{epoch} batch:{nb} loss:{loss.detach().item()}', flush=True)
         loss_avg = loss_total / len(dataset)
         loss_list.append(loss_avg)
-        print(f'{ds} avg loss: {" ".join([str(x) for x in self.val_loss])}')
+        print(f'{ds} avg loss: {" ".join([str(x) for x in self.loss_list])}')
 
-    def test(self, model_name, epoch, test=True):
-        self.load_checkpoint(epoch, model_name)
+        if test:
+            self.log_metrics()
+
+    def test(self, epoch, test=True):
+        self.load_checkpoint(epoch)
         self.validate(epoch, test=test)
         self.get_confusion(dataset='test')
 
@@ -126,8 +132,8 @@ class Trainer:
         cml.append(','.join([str(x) for x in cm]))
         print(f'{dataset} confusion matrix (tn, fp, fn, tp): {cm}')
 
-    def predict(self, epoch=None, model_name=None, pred_seq=[], pred_file='pred_dataset.pt', pred_file_paired=True, out_file='predicted.txt', alphabet=['N', 'A', 'C', 'G', 'T']):
-        self.load_checkpoint(epoch, model_name)
+    def predict(self, epoch=None, pred_seq=[], pred_file='pred_dataset.pt', pred_file_paired=True, out_file='predicted.txt', alphabet=['N', 'A', 'C', 'G', 'T']):
+        self.load_checkpoint(epoch)
         self.model.eval()
         with torch.no_grad():
             if pred_seq:
@@ -208,8 +214,8 @@ class Trainer:
         ax.plot(df['epoch'], df['val_loss'], label='val_loss')
         plt.savefig(plot_file)
 
-    def saliency_map(self, epoch=None, model_name=None, sal_seq=[], out_file='saliency.txt', target=1, alphabet=['N', 'A', 'C', 'G', 'T']):
-        self.load_checkpoint(epoch, model_name)
+    def saliency_map(self, epoch=None, sal_seq=[], out_file='saliency.txt', target=1, alphabet=['N', 'A', 'C', 'G', 'T']):
+        self.load_checkpoint(epoch)
         self.model.eval()
         for n, seq in enumerate(sal_seq):
             seq2 = torch.tensor([[alphabet.index(x) if x in alphabet else 0 for x in seq]])
@@ -269,10 +275,8 @@ class Trainer:
         out_file = f'{self.model_name}_ckpt_{epoch}.pt'
         torch.save(checkpoint, out_file) 
 
-    def load_checkpoint(self, epoch, model_name=None):
-        if not model_name:
-            model_name = self.model_name
-        in_file = f'{model_name}_ckpt_{epoch}.pt'
+    def load_checkpoint(self, epoch):
+        in_file = f'{self.model_name}_ckpt_{epoch}.pt'
         if os.path.exists(in_file):
             print(f'loading checkpoint from {in_file}')
             checkpoint = torch.load(in_file, map_location=self.device)

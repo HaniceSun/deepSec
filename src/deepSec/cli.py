@@ -40,15 +40,17 @@ def get_parser():
     p4.add_argument('--lr_lambda', type=str, default=None, help='learning rate as a string seperated by comma for different epochs')
 
     p5 = subparsers.add_parser("test", help="test a trained model")
-    p5.add_argument('--test_file', type=str, default='dataset_test.pt', help='test dataset file')
+    p5.add_argument('--config_file', type=str, default='config.yaml', help='configuration file for model training')
     p5.add_argument('--model_name', type=str, default='SpliceAI', help='the model to test')
+    p5.add_argument('--test_file', type=str, default='dataset_test.pt', help='test dataset file')
     p5.add_argument('--epoch', type=int, default=4, help='the epoch of the trained model to load')
 
     p6 = subparsers.add_parser("predict", help="predict using a trained model")
+    p6.add_argument('--config_file', type=str, default='config.yaml', help='configuration file for model training')
+    p6.add_argument('--model_name', type=str, default='SpliceAI', help='the model to test')
     p6.add_argument('--pred_seq', type=str, default='ATCG,ATCG', help='sequences to predict, separated by comma')
     p6.add_argument('--pred_file', type=str, default='dataset_pred.pt', help='pred dataset file')
     p6.add_argument('--pred_file_paired', type=str, default='false', help='if the sequences are paired (REF and ALT) in the pred_file')
-    p6.add_argument('--model_name', type=str, default='SpliceAI', help='the model to test')
     p6.add_argument('--epoch', type=int, default=4, help='the epoch of the trained model to load')
     p6.add_argument('--out_file', type=str, default='predicted.txt', help='prediction output file')
 
@@ -101,18 +103,19 @@ def main():
         trainer.count_parameters()
         trainer.run()
     elif args.command == 'test':
-        trainer = Trainer(test_file=args.test_file)
-        trainer.test(model_name=args.model_name, epoch=args.epoch)
+        trainer = Trainer(config_file=args.config_file, model_name=args.model_name,
+                          test_file=args.test_file)
+        trainer.test(epoch=args.epoch)
     elif args.command == 'predict':
-        trainer = Trainer()
+        trainer = Trainer(config_file=args.config_file, model_name=args.model_name)
         pred_seq = [s.strip() for s in args.pred_seq.split(',')]
         pred_file_paired = args.pred_file_paired.lower() in ('true', '1', 'yes')
-        trainer.predict(model_name=args.model_name, epoch=args.epoch, pred_seq=pred_seq,
+        trainer.predict(epoch=args.epoch, pred_seq=pred_seq,
                         pred_file=args.pred_file, pred_file_paired=pred_file_paired, out_file=args.out_file)
     elif args.command == 'saliency':
-        trainer = Trainer()
+        trainer = Trainer(config_file=args.config_file, model_name=args.model_name)
         sal_seq = [s.strip() for s in args.sal_seq.split(',')]
-        trainer.saliency_map(model_name=args.model_name, epoch=args.epoch, sal_seq=sal_seq, out_file=args.out_file)
+        trainer.saliency_map(epoch=args.epoch, sal_seq=sal_seq, out_file=args.out_file)
 
 
 if __name__ == '__main__':
