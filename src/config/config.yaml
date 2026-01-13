@@ -1,5 +1,5 @@
 models:
-  SpliceAI:
+  SpliceAI-1:
     class: SpliceAI
     params:
       in_channels: 4
@@ -10,6 +10,98 @@ models:
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-1a:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 8
+      n_classes: 2
+      NWD: '[[16, 11, 1]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-1b:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 8
+      n_classes: 2
+      NWD: '[[16, 11, 1]] * 4'
+      n_blocks: 2
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-2:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 16
+      n_classes: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-2a:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 32
+      n_classes: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-2b:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 32
+      n_classes: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4'
+      n_blocks: 2
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-3:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 16
+      n_classes: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4 + [[32, 21, 10]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+  SpliceAI-4:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 16
+      n_classes: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4 + [[32, 21, 10]] * 4 + [[32, 41, 25]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
   GPT:
     class: GPT
     params:
@@ -24,6 +116,7 @@ models:
       positional_encoding: True
       learning_rate: 1e-3
       weight_decay: 0.01
+      early_stopping: false
   ResNet:
     class: ResNet
     params:
@@ -33,6 +126,7 @@ models:
       num_classes: 2
       learning_rate: 1e-3
       weight_decay: 0.01
+      early_stopping: false
   CNN:
     class: CNN
     params:
@@ -44,3 +138,4 @@ models:
       n_classes: 2
       learning_rate: 1e-3
       weight_decay: 0.01
+      early_stopping: false
