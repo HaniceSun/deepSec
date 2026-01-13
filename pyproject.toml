@@ -17,7 +17,7 @@ authors = [
 "Homepage" = "https://github.com/HaniceSun/deepSec"
 
 [project.scripts]
-deepSec = "deepSec.cli:main"
+ds = "deepSec.cli:main"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
