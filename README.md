@@ -22,25 +22,25 @@ conda activate deepSec
 # Quick Start
 
 ```
-ds download-training-data
-ds preprocess --down_sampling_fold 100
-ds torch-dataset --split_by_species=True
+deepSec download-training-data
+deepSec preprocess --down_sampling_fold 100
+deepSec torch-dataset --split_by_species=True
 
 train_file=Ensembl_Protein2Transcript_Upos_FeatureSeq_DownSampling100_dataset_train.pt
 val_file=Ensembl_Protein2Transcript_Upos_FeatureSeq_DownSampling100_dataset_val.pt
 test_file=Ensembl_Protein2Transcript_Upos_FeatureSeq_DownSampling100_dataset_test.pt
 seq=TCAAGAGCCTCAACAACAGGGTGGTTCTGGTCGTTAACGTTGCAAGCAAATGAGGCCTGACTGCCGCGAACTACAAGGAGTTCGCGACTCTGCTTGGCAA
 
-ds train --model_name GPT  --config_file config.yaml --train_file $train_file --val_file $val_file
-ds train --model_name SpliceAI  --config_file config.yaml --train_file $train_file --val_file $val_file
-ds train --model_name ResNet  --config_file config.yaml --train_file $train_file --val_file $val_file
-ds train --model_name CNN  --config_file config.yaml --train_file $train_file --val_file $val_file
+deepSec train --model_name GPT  --config_file config.yaml --train_file $train_file --val_file $val_file
+deepSec train --model_name SpliceAI  --config_file config.yaml --train_file $train_file --val_file $val_file
+deepSec train --model_name ResNet  --config_file config.yaml --train_file $train_file --val_file $val_file
+deepSec train --model_name CNN  --config_file config.yaml --train_file $train_file --val_file $val_file
 
-ds test --test_file $test_file --model_name SpliceAI --epoch 9
+deepSec test --test_file $test_file --model_name SpliceAI --epoch 9
 
-ds predict --pred_seq $seq --model_name SpliceAI --epoch 9 --out_file predicted_SpliceAI_ckpt9.txt
+deepSec predict --pred_seq $seq --model_name SpliceAI --epoch 9 --out_file predicted_SpliceAI_ckpt9.txt
 
-ds saliency --sal_seq $seq --model_name SpliceAI --epoch 9 --out_file saliency_SpliceAI_ckpt9.txt
+deepSec saliency --sal_seq $seq --model_name SpliceAI --epoch 9 --out_file saliency_SpliceAI_ckpt9.txt
 ```
 
 ## Author and License
