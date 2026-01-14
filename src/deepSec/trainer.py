@@ -74,7 +74,7 @@ class Trainer:
         if self.lr_scheduler:
             lr = self.lr_scheduler.get_last_lr()[0]
             self.learning_rates.append(lr)
-        print(f'train avg loss: {" ".join([str(x) for x in self.train_loss])}')
+        print(f'train epoch:{epoch} avg loss: {" ".join([str(x) for x in self.train_loss])}')
 
     def validate(self, epoch, test=False):
         ds = 'val'
@@ -100,7 +100,7 @@ class Trainer:
                     print(f'{ds} epoch:{epoch} batch:{nb} loss:{loss.detach().item()}', flush=True)
         loss_avg = loss_total / len(dataset)
         loss_list.append(loss_avg)
-        print(f'{ds} avg loss: {" ".join([str(x) for x in loss_list])}')
+        print(f'{ds} epoch:{epoch} avg loss: {" ".join([str(x) for x in loss_list])}')
 
     def test(self, epoch, test=True):
         self.load_checkpoint(epoch)
@@ -305,10 +305,10 @@ class Trainer:
         except Exception as e:
             print(f'Error loading config file {e}')
 
-    def run(self, load_epoch=None, start_epoch=0, end_epoch=10, validate=True):
-        if load_epoch is not None:
-            self.load_checkpoint(load_epoch)
-            start_epoch = load_epoch + 1
+    def run(self, resume_epoch=None, start_epoch=0, end_epoch=10, validate=True):
+        if resume_epoch is not None:
+            self.load_checkpoint(resume_epoch)
+            start_epoch = resume_epoch + 1
 
         for epoch in range(start_epoch, end_epoch):
             self.train(epoch)
