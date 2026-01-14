@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from .utils import *
 
 class CustomDataset(Dataset):
-    def __init__(self, in_file, uniq_seq=False, idx_by_species=True):
+    def __init__(self, in_file, uniq_seq=False, idx_by_species=True, idx_species=8, train_species=['metazoa', 'protists']):
         self.out_file = in_file.split('.txt')[0]
         self.X = []
         self.y = []
@@ -50,9 +50,9 @@ class CustomDataset(Dataset):
                 self.y.append(cls)
 
                 if idx_by_species:
-                    if fields[0].find('metazoa_') != -1 or fields[0].find('protists_') != -1:
+                    if fields[idx_species].lower() in train_species:
                         self.train_idx.append(n)
-                    elif fields[0].find('vertebrate_') != -1:
+                    else:
                         self.val_idx.append(n)
             inFile.close()
 
