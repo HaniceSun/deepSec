@@ -214,6 +214,15 @@ class Trainer:
         else:
             df.tail(1).to_csv(self.metrics_file, index=False, header=True, sep='\t')
 
+        if self.train_loss and self.val_loss:
+            plot_file = self.metrics_file.replace('.txt', '.pdf')
+            fig = plt.figure()
+            ax = fig.add_subplot()
+            ax.plot(df['epoch'], df['train_loss'], label='train_loss')
+            ax.plot(df['epoch'], df['val_loss'], label='val_loss')
+            plt.savefig(plot_file)
+            plt.close()
+
     def saliency_map(self, epoch=None, sal_seq=[], out_file='saliency.txt', target=1, alphabet=['N', 'A', 'C', 'G', 'T']):
         self.load_checkpoint(epoch)
         self.model.eval()
