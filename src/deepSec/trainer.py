@@ -312,9 +312,9 @@ class Trainer:
                     self.early_stopping(self.val_loss[-1], epoch)
                     self.best_epochs.append(self.early_stopping.best_epoch)
 
-                if self.early_stopping.stopped:
-                    print(f'Early stopped, beast epoch: {self.early_stopping.best_epoch}')
-                    break
+                    if self.early_stopping.stopped:
+                        print(f'Early stopped, beast epoch: {self.early_stopping.best_epoch}')
+                        break
 
             if self.lr_scheduler:
                 self.lr_scheduler.step()
