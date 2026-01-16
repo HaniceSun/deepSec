@@ -16,10 +16,10 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 8
+      out_channels: 16
       n_classes: 2
       NWD: '[[16, 11, 1]] * 4'
-      n_blocks: 4
+      n_blocks: 2
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
@@ -29,10 +29,10 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 8
+      out_channels: 16
       n_classes: 2
-      NWD: '[[16, 11, 1]] * 4'
-      n_blocks: 2
+      NWD: '[[16, 11, 1]] * 2'
+      n_blocks: 4
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
@@ -42,7 +42,7 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 16
+      out_channels: 32
       n_classes: 2
       NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4'
       n_blocks: 4
@@ -70,8 +70,8 @@ models:
       in_channels: 4
       out_channels: 32
       n_classes: 2
-      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4'
-      n_blocks: 2
+      NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 2'
+      n_blocks: 4
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
@@ -81,10 +81,10 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 16
+      out_channels: 32
       n_classes: 2
       NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4 + [[32, 21, 10]] * 4'
-      n_blocks: 4
+      n_blocks: 2
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
@@ -93,10 +93,10 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 16
+      out_channels: 32
       n_classes: 2
       NWD: '[[32, 11, 1]] * 4 + [[32, 11, 4]] * 4 + [[32, 21, 10]] * 4 + [[32, 41, 25]] * 4'
-      n_blocks: 4
+      n_blocks: 2
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
