@@ -36,7 +36,7 @@ def get_parser():
     p4.add_argument('--model_name', type=str, default='SpliceAI', help='the model to train')
     p4.add_argument('--train_file', type=str, default='dataset_train.pt', help='training dataset file')
     p4.add_argument('--val_file', type=str, default='dataset_val.pt', help='validation dataset file')
-    p4.add_argument('--metrics_file', type=str, default='metrics.txt', help='metrics output file')
+    p4.add_argument('--metrics_file', type=str, default=None, help='metrics output file, default to {model_name}_metrics.txt if not specified')
     p4.add_argument('--lr_lambda', type=str, default=None, help='learning rate as a string seperated by comma for different epochs')
     p4.add_argument('--resume_epoch', type=int, default=None, help='resume training from a specific epoch if specified')
 
