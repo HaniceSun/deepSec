@@ -28,8 +28,8 @@ class CustomDataset(Dataset):
                 fields = line.split('\t')
                 gene_name = fields[2]
                 seq = fields[-1]
-                cls = fields[-2]
-                D[seq] = cls
+                clss = fields[-2]
+                D[seq] = clss
             inFile.close()
 
             for k in D:
@@ -45,9 +45,9 @@ class CustomDataset(Dataset):
                 fields = line.split('\t')
                 gene_name = fields[2]
                 seq = fields[-1]
-                cls = fields[-2]
+                clss = fields[-2]
                 self.X.append(seq)
-                self.y.append(cls)
+                self.y.append(clss)
 
                 if idx_by_species:
                     if fields[idx_species].lower() in train_species:

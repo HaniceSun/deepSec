@@ -29,10 +29,23 @@ models:
     class: SpliceAI
     params:
       in_channels: 4
-      out_channels: 16
+      out_channels: 8
       n_classes: 2
-      NWD: '[[16, 11, 1]] * 2'
-      n_blocks: 4
+      NWD: '[[8, 5, 1]] * 4'
+      n_blocks: 2
+      context_length: 100
+      learning_rate: 5e-4
+      weight_decay: 0.01
+      early_stopping: false
+
+  SpliceAI-1c:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 8
+      n_classes: 2
+      NWD: '[[8, 5, 1]] * 8'
+      n_blocks: 2
       context_length: 100
       learning_rate: 5e-4
       weight_decay: 0.01
