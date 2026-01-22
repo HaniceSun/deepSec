@@ -15,7 +15,7 @@ class Config:
             else:
                 setattr(self, k, v)
 
-class CustomeLoss(torch.nn.Module):
+class CustomLoss(torch.nn.Module):
     def __init__(self, cfg=None):
         super().__init__()
         self.focal_loss = False
