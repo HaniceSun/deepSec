@@ -44,12 +44,26 @@ models:
       in_channels: 4
       out_channels: 8
       n_classes: 2
-      NWD: '[[8, 5, 1]] * 8'
-      n_blocks: 2
+      NWD: '[[8, 5, 1]] * 4'
+      n_blocks: 4
       context_length: 100
-      learning_rate: 5e-4
+      learning_rate: 1e-6
       weight_decay: 0.01
       early_stopping: false
+
+  SpliceAI-1d:
+    class: SpliceAI
+    params:
+      in_channels: 4
+      out_channels: 8
+      n_classes: 2
+      NWD: '[[8, 5, 1]] * 4'
+      n_blocks: 4
+      context_length: 100
+      learning_rate: 1e-6
+      weight_decay: 0.01
+      early_stopping: false
+      focal_loss: true
 
   SpliceAI-2:
     class: SpliceAI

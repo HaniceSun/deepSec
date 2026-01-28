@@ -7,6 +7,9 @@ import pylab as plt
 import seaborn as sns
 from importlib import resources
 
+BASE = resources.files(__package__.split(".")[0])
+config_dir = f'{BASE}/config'
+
 class Config:
     def __init__(self, config):
         for k, v in config.items():
